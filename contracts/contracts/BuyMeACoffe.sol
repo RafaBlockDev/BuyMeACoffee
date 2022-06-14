@@ -49,6 +49,12 @@ contract Coffee {
         require(_payAmount <= cost, "Insuficient Matic provided");
 
         totalCoffee += 1;
-        console.log("%s has just sent a coffee")
+        console.log("%s has just sent a coffee!!", msg.sender);
+
+        coffee.push(Coffee(msg.sender, _message, _name, block.timestamp));
+
+        (bool success, ) = owner.call{value: _payAmount}("");
+
+        emit NewCoffee(msg.sender, block.timestamp, _message, _name);
     }
 }
